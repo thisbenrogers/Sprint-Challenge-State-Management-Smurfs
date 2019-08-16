@@ -1,5 +1,7 @@
 export const reducer = (state, action) => {
     switch (action.type) {
+        case "ON_LOAD":
+            return state;
         case "ADD_SMURF":
             return [
                 ...state,

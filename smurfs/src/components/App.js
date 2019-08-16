@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 import axios from 'axios';
 
 import SmurfList from './SmurfList';
@@ -9,18 +9,20 @@ import { initialSmurfs } from '../data';
 import "./App.css";
 
 const App = () => {
-  
+  const [loader, setLoader] = useState([]);
+
   const getSmurfs = () => {
     return axios.get('http://localhost:3333/smurfs')
-      .then(res => (
-        res.data
-      ))
-      .then(res => (
-        res
-      ))
+      .then(res => {
+        console.log("res in axios: ", res.data)
+        setLoader(res.data)})
   }
 
-  const smurfs = getSmurfs();
+  useEffect(() => {
+    getSmurfs();
+  }, []);
+
+  console.log("loader: ", loader);
 
   const [smurfState, dispatch] = useReducer(reducer, initialSmurfs);
   

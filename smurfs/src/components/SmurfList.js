@@ -7,6 +7,8 @@ import { SmurfContext } from '../contexts/SmurfContext';
 
 const SmurfList = () => {
     const { smurfState, dispatch } = useContext(SmurfContext);
+
+    console.log("smurfState in SmurfList: ", smurfState);
     
     return (
         <>
