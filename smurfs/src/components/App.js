@@ -1,25 +1,28 @@
-import React from "react";
+import React, { useReducer } from "react";
 import axios from 'axios';
 
 import SmurfList from './SmurfList';
 import { SmurfContext } from '../contexts/SmurfContext';
+import { reducer } from './reducers/smurfReducer';
 
 import "./App.css";
 
 const App = () => {
-  let smurfs = [];
+  let initialSmurfs = [];
   axios.get('http://localhost:3333/smurfs')
     .then(res => {
-      smurfs = [...res.data];
-      console.log("smurfs in axios: ", smurfs);
+      initialSmurfs = [...res.data];
     })
 
+    const [smurfState, dispatch] = useReducer(reducer, initialSmurfs);
 
     return (
-      <div className="App">
-        <h1>SMURFS! 2.0 W/ Context and useReducer</h1>
-        <SmurfList />
-      </div>
+      <SmurfContext.Provider value={{ smurfState, dispatch }}>
+        <div className="App">
+          <h1>SMURFS! 2.0 W/ Context and useReducer</h1>
+          <SmurfList />
+        </div>
+      </SmurfContext.Provider>
     );
 }
 
